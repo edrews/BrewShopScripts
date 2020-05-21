@@ -1,0 +1,7 @@
+/* Remove category header */
+.ec-size .ec-store .ec-page-title {
+    display: none;
+}
+.ec-size .ec-store .grid__sort {
+    margin-top: 10px;
+}
