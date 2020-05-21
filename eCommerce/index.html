@@ -1,0 +1,128 @@
+<!--
+TODO
+Replace wine subcategories (Red > Big) with more categories (Red - Big)
+Remove wine tags from Red > Big
+Add 'Wyeast' to Wyeast name. Should be 'Wyeast 1056' instead of just '1056'
+Better support for phone mode
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<!-- START HERE when copying to Squarespace code editor-->
+<div style="width: 100%; height: 50px; border-bottom: 1px solid #b0b0b0; padding-bottom: 5px;">
+    <div style="float: left; margin-left: 10px; margin-right: 10px; line-height: 50px; font-size: 32px">
+        Online Shop
+    </div>
+    <div style="overflow: hidden; float: right; vertical-align: middle; padding: 5px;">
+        <div class="ec-cart-widget"></div>
+        <div>
+            <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
+            <script type="text/javascript">Ecwid.init();</script>
+        </div>
+    </div>
+    <div style="overflow: hidden; float: right; line-height: 55px; vertical-align: top;">
+        <div id="my-search-26827443"></div>
+        <div>
+            <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
+            <script type="text/javascript"> xSearch("id=my-search-26827443"); </script>
+        </div>
+    </div>
+</div>
+<div style="width: 100%;">
+    <div style="float: left; zoom: 0.63; border-right: 1px solid #b0b0b0; border-bottom: 1px solid #b0b0b0; padding: 1px;">
+        <div id="my-vCategories-26827443"></div>
+        <div>
+            <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-21" charset="utf-8"></script>
+            <script type="text/javascript"> xVCategories("id=my-vCategories-26827443"); </script>
+        </div>
+    </div>
+    <div style="vertical-align: top; overflow: hidden; padding-top: 15px; padding-left: 5px;">
+        <div class="homeBanner" style="display: none; margin: 10px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+            <p>
+                To our loyal customers — Thank you for your unwavering support over the last couple of months.
+                With walk-up, curbside and delivery service in place, we’ve been able to stay afloat in this every changing environment.  
+            </p>
+            <p>
+                We are excited to bring to you our online store!
+                We will continue to remain open for walk-up service from 11 am - 7 pm Tuesday - Saturday and 12 pm - 5 pm Sunday (reminder, we are closed on Mondays).
+                Our packaged beer, wine, crowlers, snacks, merchandise and certain homebrew supplies are available to securely and easily order online.
+            </p>
+            <p>
+                <b>We strongly encourage you to order online for curbside pickup or delivery.</b>
+                Curbside Pickup will be ready same day as long as order is placed an hour before close.
+                Delivery is available Tuesday - Saturday and must be submitted by 2 pm for same day delivery between the hours of 4 pm - 7 pm.
+            </p>
+        </div>
+        <div class="cartBanner" style="display: none; margin: 10px; margin-bottom: 40px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+            <p>
+                Please note that when you place an order, it will take us time to gather it together.
+            </p>
+            <p>
+                <b>Please wait</b> until you receive a confirmation email stating that your order is ready before heading to the store.
+            </p>
+        </div>
+        <div class="grainBanner" style="display: none; margin: 10px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+            <p>
+                <b>Bulk Grain:</b>
+                Unfortunately, we do not have the ability sell weighed goods like scoop-your-own grain through our online store.
+                Please email <a href="mailto: info@arlbrew.com">info@arlbrew.com</a> with a detailed email containing your order including quantity of each grain, whether we can combine multiple grains, and whether you would like your grains milled.
+                We’ll be in touch via email when your order is ready.
+            </p>
+            <p>
+                We apologize for any inconvenience and hope that this capability will be added by our vendor soon.
+            </p>
+        </div>
+        <div class="store" style="display: none">
+            <div id="my-store-26827443"></div>
+            <div>
+                <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
+                <script type="text/javascript"> xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","id=my-store-26827443");</script>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+function setBanners() {
+    homeBanner = document.getElementsByClassName("homeBanner")[0];
+    homeBanner.style.display = "none";
+    store = document.getElementsByClassName("store")[0];
+    store.style.display = "inherit";
+    if (location.hash === "") {
+        homeBanner.style.display = "inherit";
+        store.style.display = "none";
+    }
+
+    grainBanner = document.getElementsByClassName("grainBanner")[0];
+    grainBanner.style.display = "none";
+    if (location.hash.startsWith("#!/Grain/")) {
+        grainBanner.style.display = "inherit";
+    }
+
+    cartBanner = document.getElementsByClassName("cartBanner")[0];
+    cartBanner.style.display = "none";
+    if (location.hash.startsWith("#!/~/cart")) {
+        cartBanner.style.display = "inherit";
+    }
+}
+
+window.addEventListener('hashchange', function() {
+  setBanners();
+}, false);
+
+window.onload = function () {
+    setTimeout(function() {
+        setBanners();
+    }, 1);
+}
+
+</script>
+<!-- END HERE when copying to Squarespace code editor-->
+
+</body>
+</html>
