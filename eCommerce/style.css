@@ -1,7 +1,34 @@
-/* Remove category header */
+/* Squarespace: Reduce margin between shop and template */
+#innerWrapper #content {
+    padding: 2% 0;
+}
+#innerWrapper #content .main-content-wrapper, #innerWrapper #content .filter {
+    width: 96%;
+}
+
+/* Shopkeep: Remove category header */
 .ec-size .ec-store .ec-page-title {
     display: none;
 }
 .ec-size .ec-store .grid__sort {
     margin-top: 10px;
+}
+
+/* Shopkeep: Hide product categories */
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 .ec-size.ec-size--s .ec-store .ec-page-title+.ec-grid .grid__categories:first-child {
+    display: none;
+}
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 .ec-size .ec-store .ec-page-title+.ec-grid .grid__categories:first-child {
+    display: none;
+}
+
+/* Shopkeep: Make nav bar font smaller */
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 span.ecwid-categories-category {
+    font-size: 14px;
+}
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 div.ecwid-categoriesMenuBar span.ecwid-categories-category {
+    font-size: 14px;
+}
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 div.ecwid-categories-MenuBarPopup div.ecwid-categoriesMenuBar span.ecwid-categories-category {
+    font-size: 14px;
 }
