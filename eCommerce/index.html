@@ -1,31 +1,127 @@
-<!--
-TODO
-Replace wine subcategories (Red > Big) with more categories (Red - Big)
-Remove wine tags from Red > Big
-Add 'Wyeast' to Wyeast name. Should be 'Wyeast 1056' instead of just '1056'
-Better support for phone mode
--->
-
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 <body>
 
 <!-- START HERE when copying to Squarespace code editor-->
-<div style="width: 100%; height: 50px; border-bottom: 1px solid #b0b0b0; padding-bottom: 5px;">
-    <div style="float: left; margin-left: 10px; margin-right: 10px; line-height: 50px; font-size: 32px">
+<style>
+.navContainer {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #b0b0b0;
+    padding-bottom: 5px;
+}
+.search {
+    overflow: hidden;
+    line-height: 55px;
+    float: right;
+    vertical-align: top;
+}
+.cart {
+    float: right;
+    vertical-align: middle;
+    overflow: hidden;
+    padding: 5px;
+}
+.storeName {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 50px;
+    font-size: 32px
+}
+.storeAndHCatContainer {
+    width: 100%;
+}
+.hCategories {
+    display: none;
+    float: left;
+    line-height: 32px;
+    font-size: 32px;
+    width: 80px;
+    margin-right: 10px
+}
+.vCategories {
+    float: left;
+    border-right: 1px solid #b0b0b0;
+    border-bottom: 1px solid #b0b0b0;
+    padding: 1px;
+    font-size: 10px;
+}
+.storeContainer {
+    vertical-align: top;
+    overflow: hidden;
+    padding-top: 15px;
+    padding-left: 5px;
+}
+.store {
+    display: none;
+    margin-top: 10px;
+}
+.homeBanner, .cartBanner, .grainBanner {
+    display: none;
+    margin: 10px;
+    color: #404040;
+    font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;
+}
+.cartBanner {
+    margin-bottom: 40px;
+}
+@media (max-width: 600px) {
+    .navContainer {
+        height: 32px;
+    }
+    .storeName {
+        display: none;
+    }
+    .hCategories {
+        display: inherit;
+    }
+    .vCategories {
+        display: none;
+    }
+    .cart {
+        padding: 0px;
+        padding-right: 5px;
+        zoom: .7;
+    }
+    .search {
+        float: none;
+        line-height: 32px;
+        font-size: 32px;
+    }
+    .store {
+        display: inherit;
+    }
+}
+@media (max-width: 414px) {
+    .cart {
+        zoom: 1;
+    }
+}
+</style>
+
+<div class="navContainer">
+    <div class="storeName">
         Online Shop
     </div>
-    <div style="overflow: hidden; float: right; vertical-align: middle; padding: 5px;">
+    <div class="cart">
         <div class="ec-cart-widget"></div>
         <div>
             <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
             <script type="text/javascript">Ecwid.init();</script>
         </div>
     </div>
-    <div style="overflow: hidden; float: right; line-height: 55px; vertical-align: top;">
+    <div class="hCategories">
+        <div id="my-categories-26827443"></div>
+        <div>
+            <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-22" charset="utf-8"></script>
+            <script type="text/javascript"> xCategoriesV2("id=my-categories-26827443"); </script>
+        </div>
+    </div>
+    <div class="search">
         <div id="my-search-26827443"></div>
         <div>
             <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
@@ -33,16 +129,16 @@ Better support for phone mode
         </div>
     </div>
 </div>
-<div style="width: 100%;">
-    <div style="float: left; zoom: 0.63; border-right: 1px solid #b0b0b0; border-bottom: 1px solid #b0b0b0; padding: 1px;">
+<div class="storeAndHCatContainer">
+    <div class="vCategories">
         <div id="my-vCategories-26827443"></div>
         <div>
             <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-21" charset="utf-8"></script>
             <script type="text/javascript"> xVCategories("id=my-vCategories-26827443"); </script>
         </div>
     </div>
-    <div style="vertical-align: top; overflow: hidden; padding-top: 15px; padding-left: 5px;">
-        <div class="homeBanner" style="display: none; margin: 10px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+    <div class="storeContainer">
+        <div class="homeBanner">
             <p>
                 To our loyal customers — Thank you for your unwavering support over the last couple of months.
                 With walk-up, curbside and delivery service in place, we’ve been able to stay afloat in this every changing environment.  
@@ -58,7 +154,7 @@ Better support for phone mode
                 Delivery is available Tuesday - Saturday and must be submitted by 2 pm for same day delivery between the hours of 4 pm - 7 pm.
             </p>
         </div>
-        <div class="cartBanner" style="display: none; margin: 10px; margin-bottom: 40px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+        <div class="cartBanner">
             <p>
                 Please note that when you place an order, it will take us time to gather it together.
             </p>
@@ -66,7 +162,7 @@ Better support for phone mode
                 <b>Please wait</b> until you receive a confirmation email stating that your order is ready before heading to the store.
             </p>
         </div>
-        <div class="grainBanner" style="display: none; margin: 10px; color: #404040; font-family: 'Proxima Nova','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',Arial,sans-serif;">
+        <div class="grainBanner">
             <p>
                 <b>Bulk Grain:</b>
                 Unfortunately, we do not have the ability sell weighed goods like scoop-your-own grain through our online store.
@@ -77,7 +173,7 @@ Better support for phone mode
                 We apologize for any inconvenience and hope that this capability will be added by our vendor soon.
             </p>
         </div>
-        <div class="store" style="display: none">
+        <div class="store">
             <div id="my-store-26827443"></div>
             <div>
                 <script data-cfasync="false" type="text/javascript" src="https://app.shopsettings.com/script.js?26827443&data_platform=code&data_date=2020-05-20" charset="utf-8"></script>
@@ -85,9 +181,9 @@ Better support for phone mode
             </div>
         </div>
     </div>
-</div>
-<script>
+<div>
 
+<script>
 function setBanners() {
     homeBanner = document.getElementsByClassName("homeBanner")[0];
     homeBanner.style.display = "none";
@@ -97,30 +193,25 @@ function setBanners() {
         homeBanner.style.display = "inherit";
         store.style.display = "none";
     }
-
     grainBanner = document.getElementsByClassName("grainBanner")[0];
     grainBanner.style.display = "none";
     if (location.hash.startsWith("#!/Grain/")) {
         grainBanner.style.display = "inherit";
     }
-
     cartBanner = document.getElementsByClassName("cartBanner")[0];
     cartBanner.style.display = "none";
     if (location.hash.startsWith("#!/~/cart")) {
         cartBanner.style.display = "inherit";
     }
 }
-
 window.addEventListener('hashchange', function() {
-  setBanners();
+    setBanners();
 }, false);
-
 window.onload = function () {
     setTimeout(function() {
         setBanners();
     }, 1);
 }
-
 </script>
 <!-- END HERE when copying to Squarespace code editor-->
 
