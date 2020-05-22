@@ -21,6 +21,9 @@ html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 .ec-size.ec-size--s .e
 html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 .ec-size .ec-store .ec-page-title+.ec-grid .grid__categories:first-child {
     display: none;
 }
+html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 .ec-size .ec-store .grid__categories {
+    display: none;
+}
 
 /* Shopkeep: Make nav bar font smaller */
 html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 span.ecwid-categories-category {
