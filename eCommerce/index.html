@@ -57,7 +57,6 @@
     padding-left: 5px;
 }
 .store {
-    display: none;
     margin-top: 10px;
 }
 .homeBanner, .cartBanner, .grainBanner {
@@ -68,6 +67,16 @@
 }
 .cartBanner {
     margin-bottom: 40px;
+}
+.headline {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 26px;
+}
+.subheadline {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 26px;
 }
 @media (max-width: 600px) {
     .navContainer {
@@ -139,6 +148,9 @@
     </div>
     <div class="storeContainer">
         <div class="homeBanner">
+            <p class="headline">
+                Welcome to The Brew Shop Online
+            </p>
             <p>
                 To our loyal customers — Thank you for your unwavering support over the last couple of months.
                 With walk-up, curbside and delivery service in place, we’ve been able to stay afloat in this every changing environment.  
@@ -152,6 +164,9 @@
                 <b>We strongly encourage you to order online for curbside pickup or delivery.</b>
                 Curbside Pickup will be ready same day as long as order is placed an hour before close.
                 Delivery is available Tuesday - Saturday and must be submitted by 2 pm for same day delivery between the hours of 4 pm - 7 pm.
+            </p>
+            <p class="subheadline">
+                Today's Featured Items
             </p>
         </div>
         <div class="cartBanner">
@@ -187,11 +202,8 @@
 function setBanners() {
     homeBanner = document.getElementsByClassName("homeBanner")[0];
     homeBanner.style.display = "none";
-    store = document.getElementsByClassName("store")[0];
-    store.style.display = "inherit";
     if (location.hash === "") {
         homeBanner.style.display = "inherit";
-        store.style.display = "none";
     }
     grainBanner = document.getElementsByClassName("grainBanner")[0];
     grainBanner.style.display = "none";
