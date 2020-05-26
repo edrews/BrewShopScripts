@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+'''
+1.1.0
+- Better error reporting for missing SKUs
+- Changed order name to email since it's always there
+- Added support for order delivery fee
+- Multiplying stock price by item quantity when comparing totals
+
+1.0.0
+- Initial Shopkeep accounting script
+'''
+
 import csv
 import math
 import os
@@ -18,11 +29,11 @@ def readFromFile(fileName):
             for row in csv.DictReader(dataFile, skipinitialspace=True)]
     return data
 
-def getStockEntry(field, sku, stock):
+def getStockEntry(field, itemSku, itemName, stock):
     for stockItem in stock:
-        if stockItem['Store Code (SKU)'] == sku:
+        if stockItem['Store Code (SKU)'] == itemSku:
             return stockItem[field]
-    return "NOT_FOUND"
+    raise Exception("Error: The SKU for \"" + itemName + "\" (" + itemSku + ") was not found in the " + STOCK_FILE + " file")
 
 def toFloat(value):
     if (value == ''): value = 0
@@ -41,22 +52,24 @@ def writeItemSales(orders, stock):
         itemSalesWriter.writeheader()
         for orderItem in orders:
             itemSku = orderItem['sku'].strip('"')
-            stockPrice = toFloat(getStockEntry('Price', itemSku, stock))
-            itemPrice = toFloat(orderItem['total'])
-            arePricesEqual = math.isclose(stockPrice, itemPrice, rel_tol=1e-3)
+            itemName = orderItem['name']
+            stockPrice = toFloat(getStockEntry('Price', itemSku, itemName, stock))
+            itemQuantity = toFloat(orderItem['quantity'])
+            reportedTotal = toFloat(orderItem['total'])
+            arePricesEqual = math.isclose(stockPrice * itemQuantity, reportedTotal, abs_tol=0.001)
             itemSalesWriter.writerow({ \
                 'Time': orderItem['timestamp'], \
-                'Name': orderItem['name'], \
-                'Department': getStockEntry('Department', itemSku, stock), \
-                'Price (Stock)': printFloat(getStockEntry('Price', itemSku, stock)), \
+                'Name': itemName, \
+                'Department': getStockEntry('Department', itemSku, itemName, stock), \
+                'Price (Stock)': printFloat(stockPrice), \
                 'Price (eCommerce)': printFloat(orderItem['total']), \
                 'Prices Equal?': printYesNo(arePricesEqual), \
                 'Tax Details': orderItem['tax_details'], \
-                'Cost': printFloat(getStockEntry('Cost', itemSku, stock)), \
+                'Cost': printFloat(getStockEntry('Cost', itemSku, itemName, stock)), \
             })
 
 def writeOrderSales(orders, stock):
-    ORDER_FIELDS = ["Order Number", "Time", "Name", "Subtotal", "Discount", "Tax", "Reported Total", "Expected Total", "Totals Equal?"]
+    ORDER_FIELDS = ["Order Number", "Time", "Email", "Subtotal", "Delivery Fee", "Discount", "Tax", "Expected Total", "Reported Total", "Totals Equal?"]
     with open(getPath(ORDER_SALES_FILE), "w", newline='') as orderSalesFile:
         orderSalesWriter = csv.DictWriter(orderSalesFile, fieldnames = ORDER_FIELDS)
         orderSalesWriter.writeheader()
@@ -65,17 +78,18 @@ def writeOrderSales(orders, stock):
             if orderItem['order_number'] == previousOrderNumber:
                 continue #Skip orders already accounted for
             previousOrderNumber = orderItem['order_number']
-            expectedTotal = toFloat(orderItem['order_subtotal']) - toFloat(orderItem['discount']) + toFloat(orderItem['order_tax'])
-            areTotalsEqual = math.isclose(expectedTotal, toFloat(orderItem['order_total']), rel_tol=1e-3)
+            expectedTotal = toFloat(orderItem['order_subtotal']) + toFloat(orderItem['order_shipping']) - toFloat(orderItem['discount']) + toFloat(orderItem['order_tax'])
+            areTotalsEqual = math.isclose(expectedTotal, toFloat(orderItem['order_total']), abs_tol=0.001)
             orderSalesWriter.writerow({ \
                 'Order Number': orderItem['order_number'], \
                 'Time': orderItem['timestamp'], \
-                'Name': orderItem['shipto_person_name'], \
+                'Email': orderItem['email'], \
                 'Subtotal': printFloat(orderItem['order_subtotal']), \
+                'Delivery Fee': printFloat(orderItem['order_shipping']), \
                 'Discount': printFloat("-"+orderItem['discount']), \
                 'Tax': printFloat(orderItem['order_tax']), \
-                'Reported Total': printFloat(orderItem['order_total']), \
                 'Expected Total': printFloat(expectedTotal), \
+                'Reported Total': printFloat(orderItem['order_total']), \
                 'Totals Equal?': printYesNo(areTotalsEqual), \
             })
 
@@ -84,10 +98,10 @@ try:
     orders = readFromFile(ORDERS_FILE)
     print("Reading " + STOCK_FILE + "...")
     stock = readFromFile(STOCK_FILE)
-    print("Writing " + ITEM_SALES_FILE + "...")
-    writeItemSales(orders, stock)
     print("Writing " + ORDER_SALES_FILE + "...")
     writeOrderSales(orders, stock)
+    print("Writing " + ITEM_SALES_FILE + "...")
+    writeItemSales(orders, stock)
     print("Files written successfully!")
 except Exception as e:
     print(e)
