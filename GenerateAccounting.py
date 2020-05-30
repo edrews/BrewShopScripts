@@ -219,22 +219,24 @@ def writeTotalItemsSold(sales, orders, stock):
 
 def generateAccounting():
     try:
-        print("Reading " + ORDERS_FOLDER + " folder...")
+        print("Reading from '" + ORDERS_FOLDER + "' folder...")
         orders = readFromFolder(ORDERS_FOLDER)
-        print("Reading " + STOCK_FOLDER + " folder...")
+        print("Reading from '" + STOCK_FOLDER + "' folder...")
         stock = readFromFolder(STOCK_FOLDER)
         print("Writing " + ORDER_SALES_FILE + "...")
         writeOrders(orders, stock)
         print("Writing " + ITEM_SALES_FILE + "...")
         writeItemsSold(orders, stock)
         if os.path.exists(getPath(SALES_BY_ITEM_FOLDER)):
-            print("Reading " + SALES_BY_ITEM_FOLDER + " folder...")
+            print("Reading from '" + SALES_BY_ITEM_FOLDER + "' folder...")
             sales = readFromFolder(SALES_BY_ITEM_FOLDER)
             print("Writing " + TOTAL_SALES_FILE + "...")
             writeTotalItemsSold(sales, orders, stock)
         else:
             print("Skipping " + TOTAL_SALES_FILE + "...")
-        print("All files written successfully!")
+        print("Data conversion complete")
+    except FileNotFoundError as e:
+        print("Folder not found")
     except Exception as e:
         print("Error: " + e)
     input("Press Enter to exit...")
