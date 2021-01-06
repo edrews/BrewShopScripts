@@ -35,3 +35,8 @@ html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 div.ecwid-categoriesMe
 html#ecwid_html body#collection\-5ec5fe92162eeb56420ada45 div.ecwid-categories-MenuBarPopup div.ecwid-categoriesMenuBar span.ecwid-categories-category {
     font-size: 14px;
 }
+
+/* Shopkeep: Remove gift card entry */
+.ec-cart-discount-group__giftcard {
+    display: none;
+}
